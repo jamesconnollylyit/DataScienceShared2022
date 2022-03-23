@@ -35,3 +35,51 @@ managers$AgeCat[managers$Age >= 45] <- "Elder"
 managers$AgeCat[managers$Age >= 26 & managers$Age <= 44] <- "Middle Aged"
 managers$AgeCat[managers$Age <= 25] <- "Young"
 managers$AgeCat[is.na(managers$Age)] <- "Elder"
+
+# Recode AgeCat so that is ordinal and factored with the
+# order Young, Middle aged, Elder
+# We'll srore the ordinal factored data in variable 'AgeCat'
+AgeCat <- factor(managers$AgeCat, order = TRUE, levels = c("Young", "Middle Aged", "Elder"))
+
+# Replace managers's AgeCat attribute with newly ordinal foctored data
+managers$AgeCat <- AgeCat
+
+# Create a new column called 'summary_col' that
+# contains a summary of each row
+summary_col <- managers$Q1 + managers$Q2 + managers$Q3 + managers$Q4 + managers$Q5
+summary_col
+
+# Add summary_col to the end of the data frame
+managers <- data.frame(managers, summary_col)
+
+# Calculate mean value for each row
+mean_value <- rowMeans(managers[5:9])
+
+# Add mean_value to end of managers data frame
+managers <- data.frame(managers, mean_value)
+
+# Show data frame contents
+managers
+
+# Change the name of this column to "mean value"
+names(managers)[12] <- "mean value"
+
+# Change name of summary_col to "Answer total"
+names(managers)[11] <- "Answer total"
+
+# Show 
+str(managers)
+
+# Change the date structure from the factor
+# to the required date structure
+
+# We cannot convert a factor variable to date
+# without first converting to a character variable
+# from the default factor variable
+date_field   <- as.character(managers$Date)
+new_date <- as.Date(date_field, "%Y/%d/%m")
+str(new_date)
+
+# Now overwrite the contents of the date field with new date structure
+managers$Date = new_date
+str(managers)
