@@ -1,0 +1,67 @@
+# Cars linear regression example
+
+scatter.smooth(x = cars$dist, 
+               y = cars$speed, 
+               main = "Distance ~ Speed",
+               xlab = "Stopping distance",
+               ylab = "Car speed")
+
+# This is a high correlation value and suggests 
+# a high positive correlation between both variables.
+cor(cars$speed, cars$dist)
+
+# Check for outliers in variables
+# Generally, any data point that lies outside the 
+# 1.5 * interquartile-range (1.5 * IQR) is considered 
+# an outlier, Where:
+  
+# IQR is calculated as the distance between the 
+# 25th percentile and 75th percentile values for that 
+# variable.
+
+# We’ll need to check both distance and speed.
+
+opar <- par(no.readonly = TRUE)
+par(mfrow = c(1, 2)) # divide graph area in 2 columns
+attach(cars)
+boxplot(speed, 
+        main = "Speed", 
+        sub = paste("Outlier rows: ", 
+                    boxplot.stats(speed)$out)) # box plot for 'speed'
+
+boxplot(dist, 
+        main = "Distance", 
+        sub = paste("Outlier rows: ", 
+                    boxplot.stats(dist)$out)) # box plot for 'distance'
+
+detach(cars)
+par <- opar
+
+# The boxplots suggest that there is 1 outlier 
+# in the data in the distance variable where the 
+# speed is 120.
+
+nrow(cars)
+
+# Remove the outlier row
+cars <- subset(cars, cars$dist!=120)
+
+# Check that outlier row has been removed
+nrow(cars)
+
+# Rerun the boxplot to verify that outliers have been removed
+opar <- par(no.readonly = TRUE)
+par(mfrow = c(1, 2)) # divide graph area in 2 columns
+attach(cars)
+boxplot(speed, 
+        main = "Speed", 
+        sub = paste("Outlier rows: ", 
+                    boxplot.stats(speed)$out)) # box plot for 'speed'
+
+boxplot(dist, 
+        main = "Distance", 
+        sub = paste("Outlier rows: ", 
+                    boxplot.stats(dist)$out)) # box plot for 'distance'
+
+detach(cars)
+par <- opar
