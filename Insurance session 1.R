@@ -62,3 +62,19 @@ pairs.panels(insurance_data,
 # if we build the model now, R will automatically split the
 # factor variables
 # Alternatively we will control this process
+
+# in linear regresison, mode lis:
+# y = b0 + B1x1 + B2x2 + B3x3 + e
+# where y = insurance charges
+# x1 = age of the person
+# x2  sex of the person
+# x3 = bmi of the person
+# x4 = children
+# x5 = smoker
+# x6 = region
+# It is clear that x1, and x3 are continuous and x2, x4, x5, x6 are categorical
+# therefore we need to create dummy variables for the categorical
+# variables
+# For the sex variable x2
+# x2 = 1 if person is male
+# x2 = 0 if person is female
