@@ -90,4 +90,57 @@ states <- subset(states,
 # Remove Income outliers
 states <- subset(states, states$Income != 6315)
 
+# Skewness function to examine normality
+#install.packages("e1071")
+library(e1071)
+opar <- par(no.readonly = TRUE)
+par(mfrow = c(4,2)) # divide graph area into 1 row x 2 cols
+# density plot for speed
+# minimally skewed to the left
+# skewness of < -1 or > 1 = highly skewed
+# -1 to -0.5 and 0.5 to 1 = moderately skewed
+# Skewness of -0.5 to 0.5 = approx symetrical
+
+plot(density(states$Population),
+main = "Density plot : Population",
+ylab = "Frequency", xlab = "Population",
+sub = paste("Skewness : ", round(e1071::skewness(states$Population), 2)))
+
+# fill the area under the plot
+
+polygon(density(states$Population), col = "red")
+
+plot(density(states$Murder),
+main = "Density plot : Murder",
+ylab = "Frequency", xlab = "Murder",
+sub = paste("Skewness : ", round(e1071::skewness(states$Murder), 2)))
+polygon(density(states$Murder), col = "red")
+
+plot(density(states$HS_Grad),
+main = "Density plot : HS grade",
+ylab = "Frequency", xlab = "HS grade",
+     sub = paste("Skewness : ", round(e1071::skewness(states$HS_Grad), 2)))
+# fill the area under the plot
+polygon(density(states$HS_Grad), col = "red")
+
+plot(density(states$Illiteracy),
+main = "Density plot : Illiteracy",
+ylab = "Frequency", xlab = "Illiteracy",
+sub = paste("Skewness : ", round(e1071::skewness(states$Illiteracy), 2)))
+polygon(density(states$Illiteracy), col = "red")
+
+plot(density(states$Income),
+main = "Density plot : Income",
+ylab = "Frequency", xlab = "Income",
+sub = paste("Skewness : ", round(e1071::skewness(states$Income), 2)))
+# fill the area under the plot
+polygon(density(states$Income), col = "red")
+
+plot(density(states$Frost),
+main = "Density plot : Frost",
+ylab = "Frequency", xlab = "Feost",
+sub = paste("Skewness : ", round(e1071::skewness(states$Frost), 2)))
+# fill the area under the plot
+polygon(density(states$Frost), col = "red")
+par <- opar
 
